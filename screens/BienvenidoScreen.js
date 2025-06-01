@@ -2,19 +2,15 @@ import React from 'react';
 import {
   View,
   Text,
+  TouchableOpacity,
   Image,
   ImageBackground,
-  TouchableOpacity,
 } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import type { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { styles } from './Bienvenido.styles';
-import type { RootStackParamList } from '../App'; // ajusta la ruta si es necesario
-
-type NavigationProp = NativeStackNavigationProp<RootStackParamList, 'Bienvenido'>;
+import { useNavigation } from '@react-navigation/native';
 
 export default function BienvenidoScreen() {
-  const navigation = useNavigation<NavigationProp>();
+  const navigation = useNavigation(); // ✅ Sin tipado porque estás usando JS puro
 
   return (
     <ImageBackground
@@ -28,7 +24,10 @@ export default function BienvenidoScreen() {
           resizeMode="contain"
         />
 
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => navigation.navigate('Login')}
+        >
           <Text style={styles.buttonText}>INICIAR SESIÓN</Text>
         </TouchableOpacity>
 

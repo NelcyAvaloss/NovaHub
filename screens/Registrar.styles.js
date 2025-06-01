@@ -26,11 +26,11 @@ export const styles = StyleSheet.create({
 
   // Contenedor translúcido blanco donde se colocan los campos
   overlay: {
-    flex: 1, // Hace que el contenedor crezca para ocupar todo el espacio disponible dentro del padre
-    paddingHorizontal: 30, // Aplica espacio a la izquierda y derecha del contenido interno (margen interno horizontal)
-    paddingTop: 80, // Espacio interno superior, separa el contenido del borde superior del contenedor
+    flex: 1, // Hace que el contenedor crezca 
+    paddingHorizontal: 30, // Aplica espacio a la izquierda y derecha 
+    paddingTop: 40, // Espacio interno superior, separa el contenido del borde superior del contenedor
     paddingBottom: 30, // Espacio interno inferior
-    backgroundColor: 'rgba(255, 255, 255, 0.3)', // blanco con transparencia
+    backgroundColor: 'rgba(255, 255, 255, 0.6)', // blanco con transparencia
     borderTopLeftRadius: 50,
     borderTopRightRadius: 50,
     shadowColor: '#000',
@@ -39,14 +39,14 @@ export const styles = StyleSheet.create({
     shadowRadius: 8,
   },
 
-  // Título principal "Create an Account"
+  // Título principal "Create an Account" 
   title: {
   fontSize: 32,                 // Tamaño del texto grande para destacar
   fontWeight: 'bold',          // Letra en negrita
   color: '#fff',               // Color blanco
-  textAlign: 'right',          // ✅ Alinea el texto hacia la derecha dentro del componente Text
-  alignSelf: 'flex-end',       // ✅ Posiciona el componente Text hacia el extremo derecho del contenedor
-  marginRight: 20,             // ✅ Separación desde el borde derecho
+  textAlign: 'right',          // Alinea el texto hacia la derecha dentro del componente Text
+  alignSelf: 'flex-end',       // Posiciona el componente Text hacia el extremo derecho del contenedor
+  marginRight: 20,             // Separación desde el borde derecho
   marginTop: 80,              // Espacio desde la parte superior
   marginBottom: 10,            // Espacio debajo del título
 },
@@ -153,13 +153,13 @@ export const styles = StyleSheet.create({
   label: {
     fontSize: 14,
     fontWeight: '600',
-    color: '#fff',
+    color: '#0e0e2c',
     alignSelf: 'flex-start',
     marginBottom: 6,
     marginLeft: 10,
   },
 
-  // ❗ Botón de retroceso (↩) en la esquina superior izquierda
+  // Botón de retroceso (↩) en la esquina superior izquierda
   backButton: {
     position: 'absolute',  // Se posiciona libremente sobre la pantalla
     top: 30,               // Distancia desde la parte superior
