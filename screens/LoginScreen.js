@@ -8,14 +8,14 @@ import {
   StatusBar,
 } from 'react-native';
 import { styles } from './Login.styles';
-import { useNavigation } from '@react-navigation/native'; // ✅ Importa useNavigation
+import { useNavigation } from '@react-navigation/native';
 
 export default function LoginScreen() {
   const [usuario, setUsuario] = useState('');
   const [contrasena, setContrasena] = useState('');
   const [verContrasena, setVerContrasena] = useState(false);
 
-  const navigation = useNavigation(); // ✅ Inicializa navegación
+  const navigation = useNavigation();
 
   return (
     <View style={{ flex: 1 }}>
@@ -67,7 +67,11 @@ export default function LoginScreen() {
               <Text style={styles.forgotText}>¿Has olvidado tu contraseña?</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.primaryButton}>
+            {/* Botón que redirige a Home */}
+            <TouchableOpacity
+              style={styles.primaryButton}
+              onPress={() => navigation.navigate('Home')}
+            >
               <Text style={styles.primaryButtonText}>Login</Text>
             </TouchableOpacity>
           </View>
