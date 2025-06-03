@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import {
   View,
   Text,
@@ -6,10 +6,31 @@ import {
   TouchableOpacity,
   Image,
   ImageBackground,
+  Animated,
 } from 'react-native';
 import { styles } from './Home.styles';
 
 export default function HomeScreen({ navigation }) {
+  const scaleAnim = useRef(new Animated.Value(1)).current;
+
+  const handlePressIn = () => {
+    Animated.spring(scaleAnim, {
+      toValue: 1.2,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const handlePressOut = () => {
+    Animated.spring(scaleAnim, {
+      toValue: 1,
+      friction: 3,
+      tension: 40,
+      useNativeDriver: true,
+    }).start(() => {
+      navigation.navigate('CrearPublicacion');
+    });
+  };
+
   return (
     <View style={styles.container}>
       {/* Fondo con estrellas en el encabezado */}
@@ -51,11 +72,20 @@ export default function HomeScreen({ navigation }) {
         <TouchableOpacity>
           <Image source={require('../assets/Nav_Medalla.png')} style={styles.navIcon} />
         </TouchableOpacity>
-        
-        {/* 👉 Botón de publicación conectado */}
-        <TouchableOpacity onPress={() => navigation.navigate('CrearPublicacion')}>
-          <Image source={require('../assets/Nav_Publicacion.png')} style={styles.navIcon} />
-        </TouchableOpacity>
+
+        {/* 👉 Botón de publicación animado */}
+        <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
+          <TouchableOpacity
+            onPressIn={handlePressIn}
+            onPressOut={handlePressOut}
+            style={styles.publicarBoton}
+          >
+            <Image
+              source={require('../assets/Nav_Publicacion.png')}
+              style={styles.publicarIcono}
+            />
+          </TouchableOpacity>
+        </Animated.View>
 
         <TouchableOpacity>
           <Image source={require('../assets/Nav_Usuario.png')} style={styles.navIcon} />
@@ -67,4 +97,3 @@ export default function HomeScreen({ navigation }) {
     </View>
   );
 }
-

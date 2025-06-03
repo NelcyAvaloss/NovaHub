@@ -59,7 +59,7 @@ export const styles = StyleSheet.create({
   content: {
     flex: 1,
     backgroundColor: '#fff',
-    padding: 20, // ✅ corregido
+    padding: 20,
   },
   bottomNav: {
     flexDirection: 'row',
@@ -72,5 +72,24 @@ export const styles = StyleSheet.create({
   navIcon: {
     width: 35,
     height: 35,
+  },
+
+  // 🟡 Estilos añadidos para el botón de publicación animado
+  publicarBoton: {
+    backgroundColor: '#fff',
+    borderRadius: 50,
+    padding: 10,
+    elevation: 6,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+    marginBottom: 10,
+  },
+  publicarIcono: {
+    width: 40,
+    height: 40,
   },
 });
