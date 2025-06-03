@@ -8,6 +8,7 @@ import {
   ScrollView,
   ImageBackground,
   StatusBar,
+  Alert,
 } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { styles } from './Registrar.styles';
@@ -23,9 +24,31 @@ export default function RegistrarScreen() {
 
   const navigation = useNavigation();
 
+  const manejarRegistro = () => {
+    const correoValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo);
+
+    if (
+      !nombre.trim() ||
+      !tipoUsuario.trim() ||
+      !universidad.trim() ||
+      !correo.trim() ||
+      !contrasena.trim()
+    ) {
+      Alert.alert('Campos requeridos', 'Por favor completa todos los campos antes de continuar.');
+      return;
+    }
+
+    if (!correoValido) {
+      Alert.alert('Correo inválido', 'Por favor ingresa un correo electrónico válido.');
+      return;
+    }
+
+    Alert.alert('Registro exitoso', 'Tu cuenta ha sido creada con éxito.');
+    navigation.navigate('Login');
+  };
+
   return (
     <View style={{ flex: 1 }}>
-      {/* Barra de estado transparente */}
       <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
 
       <ImageBackground
@@ -33,15 +56,12 @@ export default function RegistrarScreen() {
         style={styles.background}
         resizeMode="cover"
       >
-        {/* Botón de retroceso */}
         <TouchableOpacity onPress={() => navigation.goBack()} style={styles.backButton}>
           <Text style={{ fontSize: 60, color: '#fff', lineHeight: 45 }}>↩</Text>
         </TouchableOpacity>
 
-        {/* Título fuera del ScrollView */}
         <Text style={styles.title}>Create An{"\n"}Account</Text>
 
-        {/* Contenido desplazable */}
         <ScrollView contentContainerStyle={styles.scrollContainer}>
           <View style={styles.overlay}>
             <Text style={styles.label}>Nombre y Apellido</Text>
@@ -100,7 +120,7 @@ export default function RegistrarScreen() {
               </TouchableOpacity>
             </View>
 
-            <TouchableOpacity style={styles.primaryButton}>
+            <TouchableOpacity style={styles.primaryButton} onPress={manejarRegistro}>
               <Text style={styles.primaryButtonText}>Create Account</Text>
             </TouchableOpacity>
 

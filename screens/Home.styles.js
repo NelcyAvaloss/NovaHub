@@ -59,8 +59,7 @@ export const styles = StyleSheet.create({
   content: {
     flex: 1,
     backgroundColor: '#fff',
-    padding:20,
-    padin
+    padding: 20, // ✅ corregido
   },
   bottomNav: {
     flexDirection: 'row',

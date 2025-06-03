@@ -10,7 +10,7 @@ import { styles } from './Bienvenido.styles';
 import { useNavigation } from '@react-navigation/native';
 
 export default function BienvenidoScreen() {
-  const navigation = useNavigation(); // ✅ Sin tipado porque estás usando JS puro
+  const navigation = useNavigation(); // ✅ Sin tipado porque el uso de JS puro
 
   return (
     <ImageBackground

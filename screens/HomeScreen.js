@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import { styles } from './Home.styles';
 
-export default function HomeScreen() {
+export default function HomeScreen({ navigation }) {
   return (
     <View style={styles.container}>
       {/* Fondo con estrellas en el encabezado */}
@@ -51,9 +51,12 @@ export default function HomeScreen() {
         <TouchableOpacity>
           <Image source={require('../assets/Nav_Medalla.png')} style={styles.navIcon} />
         </TouchableOpacity>
-        <TouchableOpacity>
+        
+        {/* 👉 Botón de publicación conectado */}
+        <TouchableOpacity onPress={() => navigation.navigate('CrearPublicacion')}>
           <Image source={require('../assets/Nav_Publicacion.png')} style={styles.navIcon} />
         </TouchableOpacity>
+
         <TouchableOpacity>
           <Image source={require('../assets/Nav_Usuario.png')} style={styles.navIcon} />
         </TouchableOpacity>

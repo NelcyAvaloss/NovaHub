@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   StatusBar,
+  Alert, // ← ✅ Importante para mostrar el mensaje de error
 } from 'react-native';
 import { styles } from './Login.styles';
 import { useNavigation } from '@react-navigation/native';
@@ -17,6 +18,15 @@ export default function LoginScreen() {
 
   const navigation = useNavigation();
 
+  // ✅ Función con validación
+  const manejarLogin = () => {
+    if (!usuario.trim() || !contrasena.trim()) {
+      Alert.alert('Campos requeridos', 'Por favor completa ambos campos antes de continuar.');
+      return;
+    }
+    navigation.navigate('Home');
+  };
+
   return (
     <View style={{ flex: 1 }}>
       <StatusBar translucent backgroundColor="transparent" barStyle="light-content" />
@@ -26,16 +36,13 @@ export default function LoginScreen() {
         style={styles.background}
         resizeMode="cover"
       >
-        {/* Botón de retroceso */}
         <TouchableOpacity onPress={() => navigation.navigate('Bienvenido')} style={styles.backButton}>
           <Text style={{ fontSize: 60, color: '#fff', lineHeight: 45 }}>↩</Text>
         </TouchableOpacity>
 
         <View style={styles.container}>
-          {/* Título superior */}
           <Text style={styles.welcome}>Welcome{"\n"}Back!</Text>
 
-          {/* Contenedor curvado blanco */}
           <View style={styles.overlay}>
             <Text style={styles.loginTitle}>User Login</Text>
 
@@ -67,11 +74,8 @@ export default function LoginScreen() {
               <Text style={styles.forgotText}>¿Has olvidado tu contraseña?</Text>
             </TouchableOpacity>
 
-            {/* Botón que redirige a Home */}
-            <TouchableOpacity
-              style={styles.primaryButton}
-              onPress={() => navigation.navigate('Home')}
-            >
+            {/* ✅ Botón con validación */}
+            <TouchableOpacity style={styles.primaryButton} onPress={manejarLogin}>
               <Text style={styles.primaryButtonText}>Login</Text>
             </TouchableOpacity>
           </View>
