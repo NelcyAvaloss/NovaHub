@@ -31,6 +31,18 @@ export const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginTop: 20,
   },
+
+titlePublicacion: {
+  fontSize: 22,
+  fontWeight: 'bold',
+  color: '5e5b5b',
+  textAlign: 'left',
+  marginLeft: 20,
+  marginTop: 20,
+},
+
+
+
   searchContainer: {
     marginTop: 10,
     paddingHorizontal: 10,
@@ -65,18 +77,19 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-around',
     backgroundColor: '#0e0e2c',
-    paddingVertical: 12,
+    paddingVertical: 5,
     borderRadius: 30,
     marginHorizontal: 4,
+    top: -1,
   },
   navIcon: {
-    width: 35,
-    height: 35,
+    width: 40,
+    height: 40,
   },
 
   // 🟡 Estilos añadidos para el botón de publicación animado
   publicarBoton: {
-    backgroundColor: '#fff',
+    backgroundColor: '#4F9DDE',
     borderRadius: 50,
     padding: 10,
     elevation: 6,

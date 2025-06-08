@@ -61,6 +61,8 @@ export default function HomeScreen({ navigation }) {
         </TouchableOpacity>
       </View>
 
+      <Text style={styles.titlePublicacion}>Publicación</Text>
+
       {/* Espacio para contenido dinámico */}
       <View style={styles.content}></View>
 
@@ -69,27 +71,20 @@ export default function HomeScreen({ navigation }) {
         <TouchableOpacity>
           <Image source={require('../assets/Nav_Home.png')} style={styles.navIcon} />
         </TouchableOpacity>
+
         <TouchableOpacity>
           <Image source={require('../assets/Nav_Medalla.png')} style={styles.navIcon} />
         </TouchableOpacity>
 
-        {/* 👉 Botón de publicación animado */}
-        <Animated.View style={{ transform: [{ scale: scaleAnim }] }}>
-          <TouchableOpacity
-            onPressIn={handlePressIn}
-            onPressOut={handlePressOut}
-            style={styles.publicarBoton}
-          >
-            <Image
-              source={require('../assets/Nav_Publicacion.png')}
-              style={styles.publicarIcono}
-            />
-          </TouchableOpacity>
-        </Animated.View>
+        {/* Botón Publicación con navegación */}
+        <TouchableOpacity onPress={() => navigation.navigate('CrearPublicacion')}>
+          <Image source={require('../assets/Nav_Publicacion.png')} style={styles.publicarIcono} />
+        </TouchableOpacity>
 
         <TouchableOpacity>
           <Image source={require('../assets/Nav_Usuario.png')} style={styles.navIcon} />
         </TouchableOpacity>
+
         <TouchableOpacity>
           <Image source={require('../assets/Nav_Chat.png')} style={styles.navIcon} />
         </TouchableOpacity>

@@ -1,53 +1,69 @@
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
+  // 🟡 CONTENEDOR GENERAL DE LA PANTALLA
   container: {
     flex: 1,
     backgroundColor: '#fff',
   },
-  header: {
-    backgroundColor: '#001e3c',
-    paddingTop: 50,
-    paddingBottom: 20,
-    paddingHorizontal: 20,
-    position: 'relative',
+
+  // 🟣 ENCABEZADO: Imagen de fondo
+  headerBackground: {
+    width: '100%',
+    height: 120,
+    resizeMode: 'cover',
+    justifyContent: 'center',
+    paddingHorizontal: 0,
+    paddingTop: 40,
   },
-  backButton: {
-    position: 'absolute',
-    top: 50,
-    left: 20,
-    zIndex: 10,
+
+  // 🟣 ENCABEZADO: Contenedor del contenido (flecha, título, botones)
+  headerContent: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
+
+  // 🟣 ENCABEZADO: Texto de la flecha de regreso
   backText: {
     color: 'white',
     fontSize: 24,
   },
+
+  // 🟣 ENCABEZADO: Título centrado
   headerTitle: {
     color: 'white',
     fontSize: 22,
     fontWeight: 'bold',
     textAlign: 'center',
+    flex: 1,
+    top: -1,
   },
+
+  // 🟣 ENCABEZADO: Contenedor de botones (Publicar / Eliminar edición)
   headerButtons: {
     position: 'absolute',
-    top: 50,
+    top: 65,
     right: 20,
-    flexDirection: 'row',
-    gap: 10,
+    flexDirection: 'column',
+    alignItems: 'flex-end',
+    gap: 6,
   },
   headerButton: {
     backgroundColor: '#3b5f82',
     paddingHorizontal: 12,
     paddingVertical: 6,
     borderRadius: 20,
-    marginLeft: 8,
   },
   buttonText: {
     color: 'white',
     fontSize: 13,
   },
+
+  // 🔵 SECCIÓN DE INPUTS DEL FORMULARIO
   inputGroup: {
     padding: 20,
+    top: 85,
   },
   inputButton: {
     backgroundColor: '#3b5f82',
@@ -88,7 +104,7 @@ export const styles = StyleSheet.create({
     borderRadius: 20,
   },
 
-  // Vista previa
+  // 🟢 VISTA PREVIA DE LA PUBLICACIÓN
   previewCard: {
     backgroundColor: '#fafafa',
     borderRadius: 10,
@@ -145,23 +161,35 @@ export const styles = StyleSheet.create({
     borderRadius: 10,
   },
 
-  // Botones flotantes
-  floatingButtons: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    gap: 20,
-    marginBottom: 30,
-  },
-  floatingButton: {
-    width: 50,
-    height: 50,
-    backgroundColor: '#000',
-    borderRadius: 25,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  floatingIcon: {
-    fontSize: 24,
-    color: '#fff',
+  // 🔴 BOTONES FLOTANTES LADO IZQUIERDO CON IMÁGENES (uno sobre otro)
+floatingButtons: {
+  flexDirection: 'column',       // Apilados verticalmente
+  alignItems: 'flex-start',      // Alinea a la izquierda
+  marginLeft: 20,                // Separación desde el borde izquierdo
+  gap: 1,                       // Espacio entre los botones
+  top: 110,
+  marginBottom: 60,             // Espacio adicional desde la parte inferior
+},
+
+floatingButton: {
+  width: 60,
+  height: 60,
+  borderRadius: 35,
+  justifyContent: 'center',
+  alignItems: 'center',
+},
+
+floatingImage: {
+  width: 45,
+  height: 45,
+},
+
+
+  // 🔙 BOTÓN DE REGRESO A HOME (↩)
+  backButton: {
+    position: 'absolute',
+    top: -20,
+    left: 10,
+    zIndex: 10,
   },
 });
