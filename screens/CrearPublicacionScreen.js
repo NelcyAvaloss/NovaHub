@@ -1,3 +1,7 @@
+import { launchImageLibrary } from 'react-native-image-picker';
+import RNFS from 'react-native-fs';
+import { Buffer } from 'buffer';
+import { supabase } from './Supabase'; // Asegúrate que esté bien importado
 import React, { useState } from 'react';
 import {
   View,
@@ -7,6 +11,7 @@ import {
   Image,
   ImageBackground,
   ScrollView,
+  Alert,
 } from 'react-native';
 import { styles } from './CrearPublicacion.styles';
 
@@ -29,6 +34,46 @@ export default function CrearPublicacionScreen({ navigation }) {
   const areasDisponibles = categoriaSeleccionada
     ? categoriasConAreas[categoriaSeleccionada]
     : [];
+
+
+  const subirArchivo = async () => {
+  try {
+    const result = await launchImageLibrary({
+      mediaType: 'mixed',
+      selectionLimit: 1,
+    });
+
+    if (result.didCancel) return;
+    const asset = result.assets[0];
+
+    const fileUri = asset.uri;
+    const fileName = asset.fileName;
+    const fileType = asset.type;
+
+    const fileData = await RNFS.readFile(fileUri, 'base64');
+    const fileBuffer = Buffer.from(fileData, 'base64');
+
+    const { data, error } = await supabase.storage
+      .from('publicaciones')
+      .upload(`publicaciones/${Date.now()}-${fileName}`, fileBuffer, {
+        contentType: fileType,
+        upsert: false,
+      });
+
+    if (error) {
+      Alert.alert('Error al subir archivo', error.message);
+    } else {
+      Alert.alert('Éxito', 'Archivo subido correctamente');
+      console.log('Archivo guardado en:', data.path);
+    }
+  } catch (err) {
+    Alert.alert('Error inesperado', err.message);
+  }
+};  
+
+
+
+
 
   return (
     <ScrollView
@@ -154,19 +199,21 @@ export default function CrearPublicacionScreen({ navigation }) {
 
       {/* Botones flotantes */}
       <View style={styles.floatingButtons}>
-        <TouchableOpacity style={styles.floatingButton}>
-          <Image
-            source={require('../assets/AgregarDocs.png')}
-            style={styles.floatingImage}
-          />
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.floatingButton}>
-          <Image
-            source={require('../assets/SubirImagen.png')}
-            style={styles.floatingImage}
-          />
-        </TouchableOpacity>
-      </View>
+  <TouchableOpacity style={styles.floatingButton} onPress={subirArchivo}>
+    <Image
+      source={require('../assets/AgregarDocs.png')}
+      style={styles.floatingImage}
+    />
+  </TouchableOpacity>
+
+  <TouchableOpacity style={styles.floatingButton}>
+    <Image
+      source={require('../assets/SubirImagen.png')}
+      style={styles.floatingImage}
+    />
+  </TouchableOpacity>
+</View>
+
     </ScrollView>
   );
 }
