@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { supabase } from './Supabase'; 
 import {
   View,
   Text,
@@ -6,7 +7,7 @@ import {
   TouchableOpacity,
   ImageBackground,
   StatusBar,
-  Alert, // ← ✅ Importante para mostrar el mensaje de error
+  Alert, 
 } from 'react-native';
 import { styles } from './Login.styles';
 import { useNavigation } from '@react-navigation/native';
@@ -18,14 +19,32 @@ export default function LoginScreen() {
 
   const navigation = useNavigation();
 
-  // ✅ Función con validación
-  const manejarLogin = () => {
-    if (!usuario.trim() || !contrasena.trim()) {
-      Alert.alert('Campos requeridos', 'Por favor completa ambos campos antes de continuar.');
-      return;
-    }
-    navigation.navigate('Home');
-  };
+ const manejarLogin = async () => {
+  if (!usuario.trim() || !contrasena.trim()) {
+    Alert.alert('Campos requeridos', 'Por favor completa ambos campos antes de continuar.');
+    return;
+  }
+
+  // Intentar logear al usuario con el correo y la contraseña
+  const { data, error } = await supabase.auth.signInWithPassword({
+    email: usuario,
+    password: contrasena,
+  });
+
+  console.log("Data:", data);  // Agrega esto para ver si la respuesta es la esperada
+  console.log("Error:", error);  // Agrega esto para ver el error en caso de que ocurra
+
+  if (error) {
+    Alert.alert('Error al iniciar sesión', error.message);
+    return;
+  }
+
+  // Si el login fue exitoso, navega a la página de inicio
+  Alert.alert('Login exitoso', 'Bienvenido!');
+  navigation.navigate('Home');
+};
+
+
 
   return (
     <View style={{ flex: 1 }}>
