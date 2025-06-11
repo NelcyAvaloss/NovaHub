@@ -1,5 +1,6 @@
 import { launchImageLibrary } from 'react-native-image-picker';
 import RNFS from 'react-native-fs';
+import { FileSystem } from 'react-native-file-access';
 import { Buffer } from 'buffer';
 import { supabase } from './Supabase'; // Asegúrate que esté bien importado
 import React, { useState } from 'react';
@@ -12,7 +13,10 @@ import {
   ImageBackground,
   ScrollView,
   Alert,
+  PermissionsAndroid,
+  Platform,
 } from 'react-native';
+
 import { styles } from './CrearPublicacion.styles';
 
 export default function CrearPublicacionScreen({ navigation }) {
@@ -61,15 +65,74 @@ export default function CrearPublicacionScreen({ navigation }) {
       });
 
     if (error) {
-      Alert.alert('Error al subir archivo', error.message);
-    } else {
-      Alert.alert('Éxito', 'Archivo subido correctamente');
-      console.log('Archivo guardado en:', data.path);
-    }
+  Alert.alert('Error al subir archivo', error.message);
+} else {
+  const { data: publicData } = supabase.storage
+    .from('publicaciones')
+    .getPublicUrl(data.path);
+
+  setArchivoURL(publicData.publicUrl);
+  Alert.alert('Éxito', 'Archivo subido correctamente');
+  console.log('✅ URL pública:', publicData.publicUrl);
+}
+
   } catch (err) {
     Alert.alert('Error inesperado', err.message);
   }
 };  
+
+const seleccionarArchivoConIntent = async () => {
+  try {
+    if (Platform.OS === 'android') {
+      const granted = await PermissionsAndroid.request(
+        PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+        {
+          
+        }
+      );
+
+      if (granted !== PermissionsAndroid.RESULTS.GRANTED) {
+        Alert.alert('Permiso denegado si');
+        return;
+      }
+
+      IntentLauncher.startActivityForResult(
+        {
+          action: 'android.intent.action.GET_CONTENT',
+          type: '*/*',
+        },
+        async (result) => {
+          const uri = result?.uri;
+          if (!uri) {
+            Alert.alert('No se seleccionó ningún archivo');
+            return;
+          }
+
+          const fileName = uri.split('/').pop();
+          const fileData = await FileSystem.readFile(uri, 'base64');
+          const fileBuffer = Buffer.from(fileData, 'base64');
+
+          const { data, error } = await supabase.storage
+            .from('publicaciones')
+            .upload(`documentos/${Date.now()}-${fileName}`, fileBuffer, {
+              contentType: 'application/octet-stream', // o intenta detectar el tipo real si puedes
+              upsert: false,
+            });
+
+          if (error) {
+            Alert.alert('Error al subir el archivo', error.message);
+          } else {
+            Alert.alert('Éxito', 'Archivo subido correctamente');
+            console.log('📂 Archivo guardado en:', data.path);
+          }
+        }
+      );
+    }
+  } catch (err) {
+    Alert.alert('Error inesperado', err.message);
+  }
+};
+
 
 
 
@@ -206,13 +269,14 @@ export default function CrearPublicacionScreen({ navigation }) {
     />
   </TouchableOpacity>
 
-  <TouchableOpacity style={styles.floatingButton}>
+  <TouchableOpacity style={styles.floatingButton} onPress={seleccionarArchivoConIntent}>
     <Image
       source={require('../assets/SubirImagen.png')}
       style={styles.floatingImage}
     />
   </TouchableOpacity>
 </View>
+
 
     </ScrollView>
   );
